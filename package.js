@@ -1,10 +1,10 @@
 Package.describe({
-  name: 'studiointeract:slack-invite',
-  version: '1.0.2',
+  name: '19degrees:slack-invite',
+  version: '1.1.3',
   // Brief, one-line summary of the package.
-  summary: 'Template and form to add a Slack invite box on your app.',
+  summary: 'A fork of studiointeract:slack-invite to add loader support.',
   // URL to the Git repository containing the source code for this package.
-  git: 'https://github.com/studiointeract/meteor-slack-invite',
+  git: 'https://github.com/19degrees/meteor-slack-invite',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'
@@ -19,6 +19,7 @@ Package.onUse(function(api) {
   api.use('mongo');
   api.use('http');
   api.use('reactive-var');
+  api.use('sacha:spin@2.0.0', ['client']);
 
   api.export('Slack');
 

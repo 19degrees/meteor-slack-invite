@@ -1,5 +1,6 @@
 <template name="slackInvite">
   {{#unless invite}}
+  {{#if slack}}
   <form>
     <div class="slack-info">
       <p>Join <strong>{{slack.name}}</strong> on Slack.<br />
@@ -8,6 +9,9 @@
     <input type="email" placeholder="you@yourdomain.com" />
     <button type="submit">Get my invite</button>
   </form>
+  {{else}}
+    {{> spinner}}
+  {{/if}}
   {{#if error}}
   <div class="message error">{{error}}</div>
   {{/if}}
