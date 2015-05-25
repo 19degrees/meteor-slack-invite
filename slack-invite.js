@@ -16,6 +16,7 @@ if (Meteor.isServer) {
           }).length;
 
           var data = {
+            _id: 'slack',
             online: active,
             registered: total
           };
@@ -41,7 +42,7 @@ if (Meteor.isServer) {
 
       console.log('Slack.find().count():',Slack.find().count());
       
-      if (!this.isSimulation && Slack.find().count() >= 1) {
+      if (!this.isSimulation && Slack.find().count() > 0) {
 
         console.log('method invite: !isSimulation');
 
