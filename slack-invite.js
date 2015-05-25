@@ -1,31 +1,6 @@
 Slack = new Mongo.Collection('slack');
 
-Meteor.methods({
-  invite: function(email) {
-    if (!this.isSimulation && Slack.find().count() === 1) {
-      var domain = Slack.findOne().domain;
 
-      if (domain) {
-        var url = "https://" + domain + ".slack.com/api/users.admin.invite";
-        var data = {
-          email: email,
-          token: Meteor.settings.slackToken,
-          set_active: true
-        };
-
-        try {
-          var data = HTTP.call("POST", url, {
-            params: data
-          }).data;
-        } catch(e) {
-          console.log(e);
-        }
-
-        return data;
-      }
-    }
-  }
-});
 
 if (Meteor.isServer) {
   Meteor.setInterval(function() {
@@ -59,6 +34,43 @@ if (Meteor.isServer) {
   Meteor.publish('slack', function() {
     return Slack.find();
   });
+
+  Meteor.methods({
+    invite: function(email) {
+      console.log('method invite: called');
+
+      console.log('Slack.find().count():',Slack.find().count());
+      
+      if (!this.isSimulation && Slack.find().count() >= 1) {
+
+        console.log('method invite: !isSimulation');
+
+        var domain = Slack.findOne().domain;
+
+        if (domain) {
+          console.log('method invite: domain is',domain);
+
+          var url = "https://" + domain + ".slack.com/api/users.admin.invite";
+          var data = {
+            email: email,
+            token: Meteor.settings.slackToken,
+            set_active: true
+          };
+
+          try {
+            console.log('sending request to slack', data,'...');
+            var data = HTTP.call("POST", url, {
+              params: data
+            }).data;
+          } catch(e) {
+            console.log('post exception:',e);
+          }
+
+          return data;
+        }
+      }
+    }
+  });
 }
 else {
   Template.slackInvite.onCreated(function() {
@@ -89,6 +101,7 @@ else {
       e.preventDefault();
       var email = instance.find('input').value;
       Meteor.call('invite', email, function(err, res) {
+        console.log('res:',res);
         if (!err && res.ok) {
           instance.error.set("");
           instance.invite.set(true);
