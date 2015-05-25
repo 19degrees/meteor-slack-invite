@@ -33,7 +33,7 @@ if (Meteor.isServer) {
   }, 30000);
 
   Meteor.publish('slack', function() {
-    return Slack.find();
+    return Slack.find({_id:'slack'});
   });
 
   Meteor.methods({
@@ -42,7 +42,7 @@ if (Meteor.isServer) {
 
       console.log('Slack.find().count():',Slack.find().count());
       
-      if (!this.isSimulation && Slack.find().count() > 0) {
+      if (!this.isSimulation && Slack.find().count() === 1) {
 
         console.log('method invite: !isSimulation');
 

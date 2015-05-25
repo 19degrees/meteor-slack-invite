@@ -1,6 +1,6 @@
 Package.describe({
   name: '19degrees:slack-invite',
-  version: '1.1.11',
+  version: '1.1.14',
   // Brief, one-line summary of the package.
   summary: 'A fork of studiointeract:slack-invite to add loader support.',
   // URL to the Git repository containing the source code for this package.
